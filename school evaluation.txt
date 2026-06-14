@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>School Evaluation App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    /* Add styles for your elements as needed */
+  </style>
+</head>
+<body>
+  <h1>School Evaluation Dashboard</h1>
+  
+  <!-- Placeholder elements for your script -->
+  <div id="app">
+    <div id="loginScreen" style="display:none;">
+      <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button type="submit">Login</button>
+      </form>
+      <div id="loginError" style="color:red;"></div>
+    </div>
+
+    <div class="view" id="dashboardView">
+      <h2 id="viewTitle"></h2>
+      <p>Total Learners: <span id="totalLearners"></span></p>
+      <p>Class Average: <span id="classAverage"></span></p>
+      <p>Highest Average: <span id="highestAverage"></span></p>
+      <p>Support Count: <span id="supportCount"></span></p>
+      <div id="subjectBars"></div>
+      <div id="topLearners"></div>
+      <div id="improvedLearners"></div>
+      <div id="improvedSubjects"></div>
+      <p>Selected Class: <span id="selectedClassName"></span></p>
+      <p>Class Count: <span id="selectedClassCount"></span></p>
+      <div id="classRoster"></div>
+      <div id="scoreInputs"></div>
+      <form id="registrationForm"></form>
+      <form id="learnerForm"></form>
+      <h3 id="formTitle"></h3>
+      <input type="hidden" id="editingLearnerId" />
+      <input type="text" id="learnerName" />
+    </div>
+  </div>
+  
+  <!-- Your JavaScript code -->
+  <script>
+    // Your provided code
+    const defaultSubjectsBySection = {
+      primary: [
+        "English",
+        "Maths",
+        "Kiswahili",
+        "CRE",
+        "Social Studies",
+        "Agriculture and Home Science",
+        "Creative Arts and Sports",
+        "Integrated Science",
+        "Pretechnical Studies"
+      ],
+      junior: [
+        "Mathematics",
+        "Kiswahili Paper 1",
+        "Kiswahili Paper 2",
+        "English Paper 1",
+        "English Paper 2",
+        "Integrated Science",
+        "Social Studies",
+        "CRE",
+        "Agriculture and Nutrition",
+        "Pretechnical Studies",
+        "Creative Arts and Sports"
+      ]
+    };
+    const defaultClasses = [
+      "Grade 1",
+      "Grade 2",
+      "Grade 3",
+      "Grade 4",
+      "Grade 5",
+      "Grade 6",
+      "Grade 7",
+      "Grade 8",
+      "Grade 9"
+    ];
+    const schoolName = "Ndumbinyi Primary and Junior School";
+    const apiAvailable = location.protocol !== "file:";
+
+    const sampleLearners = [];
+
+    function load(key, defaultValue) {
+      // Placeholder for data loading logic
+      return defaultValue;
+    }
+
+    function normalizeSubjectsBySection(subjects) {
+      // Placeholder for normalization logic
+      return subjects;
+    }
+
+    // Initialize variables
+    let subjectsBySection = normalizeSubjectsBySection(load("schoolEvalSubjects", defaultSubjectsBySection));
+    let learners = load("schoolEvalLearners", sampleLearners);
+    let classes = load("schoolEvalClasses", defaultClasses);
+    classes = [...new Set([...defaultClasses, ...classes, ...learners.map((learner) => learner.className).filter(Boolean)])];
+    classes = classes.filter((className) => !["Grade 7 East", "Grade 7 West"].includes(className));
+    learners = learners.map((learner) => {
+      if (learner.className === "Grade 7 East" || learner.className === "Grade 7 West") {
+        return { ...learner, className: "Grade 7" };
+      }
+      return learner;
+    });
+    learners = learners.filter((learner) => {
+      const exampleAdmissions = ["ADM-001", "ADM-002", "ADM-003"];
+      const exampleNames = ["Amina Wanjiku", "Brian Otieno", "Chao Mutiso", "Sample Learner"];
+      return !(exampleAdmissions.includes(learner.admission) && exampleNames.includes(learner.name));
+    });
+    let activeSection = apiAvailable ? "primary" : localStorage.getItem("schoolEvalActiveSection") || "primary";
+
+    function sectionClasses(section) {
+      // Placeholder: return classes for the section
+      return ["Grade 1", "Grade 2", "Grade 3"];
+    }
+
+    let activeClassName = apiAvailable
+      ? sectionClasses(activeSection)[0] || classes[0] || "Grade 1"
+      : localStorage.getItem("schoolEvalActiveClass") || sectionClasses(activeSection)[0] || classes[0] || "Grade 1";
+
+    let subjects = subjectsBySection[activeSection];
+    if {activeClassName = "Grade 7";
+    }
+
+    const viewTitles = {
+      dashboard: "Performance dashboard",
+      learners: "Class records",
+      reports: "Learner reports",
+      settings: "Classes, subjects and grading"
+    };
+
+    const elements = {
+      loginScreen: document.querySelector("#loginScreen"),
+      loginForm: document.querySelector("#loginForm"),
+      username: document.querySelector("#username"),
+      password: document.querySelector("#password"),
+      loginError: document.querySelector("#loginError"),
+      viewTitle: document.querySelector("#viewTitle"),
+      totalLearners: document.querySelector("#totalLearners"),
+      classAverage: document.querySelector("#classAverage"),
+      highestAverage: document.querySelector("#highestAverage"),
+      supportCount: document.querySelector("#supportCount"),
+      subjectBars: document.querySelector("#subjectBars"),
+      topLearners: document.querySelector("#topLearners"),
+      improvedLearners: document.querySelector("#improvedLearners"),
+      improvedSubjects: document.querySelector("#improvedSubjects"),
+      selectedClassName: document.querySelector("#selectedClassName"),
+      selectedClassCount: document.querySelector("#selectedClassCount"),
+      classRoster: document.querySelector("#classRoster"),
+      scoreInputs: document.querySelector("#scoreInputs"),
+      registrationForm: document.querySelector("#registrationForm"),
+      learnerForm: document.querySelector("#learnerForm"),
+      formTitle: document.querySelector("#formTitle"),
+      editingLearnerId: document.querySelector("#editingLearnerId"),
+      learnerName: document.querySelector("#learnerName")
+    };
+
+    // You can add further logic here
+  </script>
+</body>
+</html>
